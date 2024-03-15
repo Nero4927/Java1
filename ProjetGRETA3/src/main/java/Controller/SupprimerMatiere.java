@@ -30,7 +30,12 @@ public class SupprimerMatiere extends HttpServlet {
 		Matiere C = new Matiere (new Integer(a));
 		MatiereDAO D = new MatiereDAO ();
 		
-		D.supprimer(C);
+		try {
+			D.supprimer(C);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/ListeUser.jsp").forward(request, response);
 	}

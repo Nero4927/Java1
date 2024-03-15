@@ -40,7 +40,12 @@ public class AjouterMatiere extends HttpServlet {
 		Matiere f = new Matiere (new Integer(a), b);
 		MatiereDAO D = new MatiereDAO ();
 		
-		D.ajoute(f);
+		try {
+			D.ajoute(f);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/ListeUser.jsp").forward(request, response);
 		

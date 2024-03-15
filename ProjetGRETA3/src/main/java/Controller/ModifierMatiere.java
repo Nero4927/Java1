@@ -30,7 +30,12 @@ public class ModifierMatiere extends HttpServlet {
 		Matiere f = new Matiere (new Integer(a), "b");
 		MatiereDAO D = new MatiereDAO ();
 		
-		f=D.recuperer(f);
+		try {
+			f=D.recuperer(f);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		request.setAttribute("id", f.getId());
 		request.setAttribute("matiere", f.getMatiere());
@@ -50,7 +55,12 @@ public class ModifierMatiere extends HttpServlet {
 		Matiere C = new Matiere (new Integer(a), b);
 		MatiereDAO D = new MatiereDAO ();
 		
-		D.modifier(C);
+		try {
+			D.modifier(C);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/ListeUser.jsp").forward(request, response);
 		

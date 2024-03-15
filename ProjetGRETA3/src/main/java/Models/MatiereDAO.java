@@ -1,23 +1,19 @@
 package Models;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import Controller.Singleton;
 
 public class MatiereDAO {
 
-	public boolean existe (Matiere f)  {
+	public boolean existe (Matiere f) throws ClassNotFoundException  {
 		int nb=0;
 		try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/projetgreta",
-                "root",
-                "") ;
-           System.out.println("Connexion réussie!");
+			Connection connection = Singleton.getInstance().getConnection();
+
            
            Statement s=connection.createStatement();
            ResultSet res=s.executeQuery("select count(*) as nb from Matiere where id='"+f.getId()+"' and matiere = '"+f.getMatiere()+"' limit 1 ");
@@ -28,10 +24,7 @@ public class MatiereDAO {
            if (nb == 0) return false;
            else return true;
            
-       } catch (ClassNotFoundException ex) {
-    	   System.err.println("Erreur avec le driver");
-           ex.printStackTrace();
-       }catch(SQLException e ) {
+       } catch(SQLException e ) {
     	   System.err.println("Erreur lors de la connexion à la BDD.");
        }
 		return false;
@@ -39,14 +32,10 @@ public class MatiereDAO {
 	}
 	
 	
-	public void ajoute (Matiere f)  {
+	public void ajoute (Matiere f) throws ClassNotFoundException  {
 		try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/projetgreta",
-                "root",
-		                "") ;
-           System.out.println("Connexion réussie!");
+			Connection connection = Singleton.getInstance().getConnection();
+
            
            Statement s=connection.createStatement();
            System.err.println("INSERT INTO matiere (id, matiere) VALUES ('"+f.getId()+"', '"+f.getMatiere()+"')");
@@ -55,10 +44,7 @@ public class MatiereDAO {
            
 
            
-       } catch (ClassNotFoundException ex) {
-    	   System.err.println("Erreur avec le driver");
-           ex.printStackTrace();
-       }catch(SQLException e ) {
+       } catch(SQLException e ) {
     	   System.err.println("Autre erreur que le driver.");
     	   e.printStackTrace();}
 	   }
@@ -66,15 +52,11 @@ public class MatiereDAO {
 		
 		
 		
-		public ArrayList<Matiere> AfficherMatiere ()  {
+		public ArrayList<Matiere> AfficherMatiere () throws ClassNotFoundException  {
 			ArrayList<Matiere> listMatiere=new ArrayList<Matiere>();
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://localhost:3306/projetgreta",
-	                "root",
-			                "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
+
 	           
 	           Statement s=connection.createStatement();
 	           System.err.println("select * from matiere");
@@ -88,10 +70,7 @@ public class MatiereDAO {
 	           }
 
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Autre erreur que le driver.");
 	    	   e.printStackTrace();
 	       }
@@ -100,14 +79,10 @@ public class MatiereDAO {
 		
 		
 		
-		public void supprimer (Matiere f)  {
+		public void supprimer (Matiere f) throws ClassNotFoundException  {
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://localhost:3306/projetgreta",
-	                "root",
-			        "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
+
 	           
 	           Statement s=connection.createStatement();
 	           System.err.println("delete from matiere where id = '"+f.getId()+"'");
@@ -116,10 +91,7 @@ public class MatiereDAO {
 	           
 
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Autre erreur que le driver.");
 	    	   e.printStackTrace();
 	       }
@@ -127,14 +99,10 @@ public class MatiereDAO {
 	}
 	
 		
-		public void modifier (Matiere f)  {
+		public void modifier (Matiere f) throws ClassNotFoundException  {
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://127.0.0.1:3306/projetgreta",
-	                "root",
-			                "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
+
 	           
 	           Statement s=connection.createStatement();
 	           System.err.println("update matiere set login = ?, password = ? where id = '\"+f.getId()+\"'");
@@ -143,26 +111,19 @@ public class MatiereDAO {
 	           
 
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Autre erreur que le driver.");
 	    	   e.printStackTrace();
 	       }
 		
 	}
 		
-		public Matiere recuperer (Matiere f) {
+		public Matiere recuperer (Matiere f) throws ClassNotFoundException {
 			
 			Matiere matt = new Matiere();
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://127.0.0.1:3306/projetgreta",
-	                "root",
-			                "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
+
 	           
 	           Statement s=connection.createStatement();
 	           ResultSet res=s.executeQuery("select * from Matiere id='"+f.getId()+"' limit 1 ");
@@ -176,10 +137,7 @@ public class MatiereDAO {
 	           
 	            return matt;
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Erreur lors de la connexion à la BDD.");
 	       }
 			return matt;

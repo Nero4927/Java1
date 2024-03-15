@@ -30,7 +30,12 @@ public class Modifier extends HttpServlet {
 		Compte C = new Compte (new Integer(a), "", "");
 		CompteDAO D = new CompteDAO ();
 		
-		C=D.recuperer(C);
+		try {
+			C=D.recuperer(C);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setAttribute("login", C.getLogin());
 		request.setAttribute("password", C.getPassword());
 		
@@ -49,7 +54,12 @@ public class Modifier extends HttpServlet {
 		Compte C = new Compte (new Integer(a), b, c);
 		CompteDAO D = new CompteDAO ();
 		
-		D.modifier(C);
+		try {
+			D.modifier(C);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/ListeUser.jsp").forward(request, response);
 		

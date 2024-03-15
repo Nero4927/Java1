@@ -6,17 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import Controller.Singleton;
+
 
 public class CompteDAO {
 
 	public boolean existe (Compte C)  {
 		int nb=0;
 		try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/projetgreta",
-                "root",
-                "") ;
+			 Connection connection = Singleton.getInstance().getConnection();
+
            System.out.println("Connexion réussie!");
            
            Statement s=connection.createStatement();
@@ -28,10 +27,7 @@ public class CompteDAO {
            if (nb == 0) return false;
            else return true;
            
-       } catch (ClassNotFoundException ex) {
-    	   System.err.println("Erreur avec le driver");
-           ex.printStackTrace();
-       }catch(SQLException e ) {
+       } catch(SQLException e ) {
     	   System.err.println("Erreur lors de la connexion à la BDD.");
        }
 		return false;
@@ -41,12 +37,9 @@ public class CompteDAO {
 	
 	public void ajoute (Compte C)  {
 		try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/projetgreta",
-                "root",
-		                "") ;
-           System.out.println("Connexion réussie!");
+			
+				Connection connection = Singleton.getInstance().getConnection();
+
            
            Statement s=connection.createStatement();
            System.err.println("INSERT INTO compte (login, password) VALUES ('"+C.getLogin()+"', '"+C.getPassword()+"')");
@@ -55,24 +48,16 @@ public class CompteDAO {
            
 
            
-       } catch (ClassNotFoundException ex) {
-    	   System.err.println("Erreur avec le driver");
-           ex.printStackTrace();
-       }catch(SQLException e ) {
+       } catch(SQLException e ) {
     	   System.err.println("Autre erreur que le driver.");
     	   e.printStackTrace();}
 	   }
 		
 		
-		public ArrayList<Compte> Afficher ()  {
+		public ArrayList<Compte> Afficher () throws ClassNotFoundException  {
 			ArrayList<Compte> listUtilisateurs=new ArrayList<Compte>();
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://localhost:3306/projetgreta",
-	                "root",
-			                "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
 	           
 	           Statement s=connection.createStatement();
 	           System.err.println("select * from compte");
@@ -87,10 +72,7 @@ public class CompteDAO {
 	           }
 
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Autre erreur que le driver.");
 	    	   e.printStackTrace();
 	       }
@@ -99,14 +81,9 @@ public class CompteDAO {
 		
 		
 		
-		public void supprimer (Compte C)  {
+		public void supprimer (Compte C) throws ClassNotFoundException  {
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://localhost:3306/projetgreta",
-	                "root",
-			                "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
 	           
 	           Statement s=connection.createStatement();
 	           System.err.println("delete from compte where id = '"+C.getId()+"'");
@@ -115,10 +92,7 @@ public class CompteDAO {
 	           
 
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Autre erreur que le driver.");
 	    	   e.printStackTrace();
 	       }
@@ -126,14 +100,9 @@ public class CompteDAO {
 	}
 	
 		
-		public void modifier (Compte C)  {
+		public void modifier (Compte C) throws ClassNotFoundException  {
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://localhost:3306/projetgreta",
-	                "root",
-			                "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
 	           
 	           Statement s=connection.createStatement();
 	           System.err.println("update compte set login = ?, password = ? where id = '\"+C.getId()+\"'");
@@ -142,25 +111,17 @@ public class CompteDAO {
 	           
 
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Autre erreur que le driver.");
 	    	   e.printStackTrace();
 	       }
 		
 	}
 		
-		public Compte recuperer (Compte C)  {
+		public Compte recuperer (Compte C) throws ClassNotFoundException  {
 			 Compte compte = null;
 			try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-	                "jdbc:mysql://localhost:3306/projetgreta",
-	                "root",
-			                "") ;
-	           System.out.println("Connexion réussie!");
+				Connection connection = Singleton.getInstance().getConnection();
 	           
 	           Statement s=connection.createStatement();
 	           ResultSet res=s.executeQuery("select * from Compte where id='"+C.getId()+"' limit 1 ");
@@ -173,10 +134,7 @@ public class CompteDAO {
 	           
 	            return compte;
 	           
-	       } catch (ClassNotFoundException ex) {
-	    	   System.err.println("Erreur avec le driver");
-	           ex.printStackTrace();
-	       }catch(SQLException e ) {
+	       } catch(SQLException e ) {
 	    	   System.err.println("Erreur lors de la connexion à la BDD.");
 	       }
 			return compte;

@@ -30,7 +30,12 @@ public class Supprimer extends HttpServlet {
 		Compte C = new Compte (new Integer(a));
 		CompteDAO D = new CompteDAO ();
 		
-		D.supprimer(C);
+		try {
+			D.supprimer(C);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/ListeUser.jsp").forward(request, response);
 	}
